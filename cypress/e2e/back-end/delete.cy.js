@@ -20,20 +20,13 @@ describe('Delete Random User API', () => {
             method: 'DELETE',
             url: `${challengeBackUrl}/${randomUserId}`,
         }).then((deleteResponse) => {
-            // Ensure the DELETE request was successful
             expect(deleteResponse.status).to.equal(200);
-
-            // Validate the JSON schema of the DELETE response
             const isValid = ajv.validate(userSchema, deleteResponse.body);
             if (!isValid) {
                 console.error('Validation errors:', ajv.errorsText());
                 console.error('Validation errors:', ajv.errors);
             }
-
-            // Expect validation to pass, but log errors for further inspection
             expect(isValid, 'JSON schema validation failed').to.be.true;
-
-            // Log success message
             cy.log(`User with ID ${randomUserId} has been deleted successfully.`);
         });
     });
